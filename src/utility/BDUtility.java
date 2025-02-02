@@ -4,10 +4,16 @@
  */
 package utility;
 
+import forms.Dashboard;
+
 /**
  *
  * @author LENOVO
  */
 public class BDUtility {
+
+    public static void openForm(String simpleName, Dashboard dashboard) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }
