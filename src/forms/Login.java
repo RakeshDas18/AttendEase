@@ -24,6 +24,7 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         txtEmail.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.red));
         txtPassword.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.red));
+        this.getRootPane().setBorder(BorderFactory.createMatteBorder(6, 6, 6, 6, Color.ORANGE));
     }
 
     /**
