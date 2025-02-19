@@ -6,6 +6,7 @@ package forms;
 
 import java.awt.Color;
 import javax.swing.BorderFactory;
+import utility.BDUtility;
 
 /**
  *
@@ -58,6 +59,11 @@ public class Dashboard extends javax.swing.JFrame {
 
         btnRegisterUser.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnRegisterUser.setText("Register User");
+        btnRegisterUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterUserActionPerformed(evt);
+            }
+        });
 
         btnMarkAttendance.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnMarkAttendance.setText("Mark Attendance");
@@ -165,6 +171,10 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnRegisterUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterUserActionPerformed
+        BDUtility.openForm(UserRegistration.class.getSimpleName(), new UserRegistration());
+    }//GEN-LAST:event_btnRegisterUserActionPerformed
 
     /**
      * @param args the command line arguments
