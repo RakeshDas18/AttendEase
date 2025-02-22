@@ -8,6 +8,8 @@ package utility;
 
 //import java.io.*; 
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.util.*;
 import javax.swing.*;
 
@@ -29,6 +31,27 @@ public class BDUtility {
         } else {
             existingForm.toFront();
         }
+    }
+    
+    public static String getPath(String finalPath){
+        String projectPath = System.getProperty("user.dir");
+        return projectPath + "\\src\\" + finalPath;
+    }
+    
+    public static String getFileExtension(String fileName){
+        int lastDotIndex = fileName.lastIndexOf(".");
+        if(lastDotIndex != -1){
+            return fileName.substring(lastDotIndex + 1);
+        }
+        return "";
+    }
+    
+    public static BufferedImage scaleImage(BufferedImage originalImage, BufferedImage selectedImage){
+        int width = selectedImage.getWidth();
+        int height = selectedImage.getHeight();
+        BufferedImage scaledImage = new BufferedImage(width, height, originalImage.getType());
+        scaledImage.createGraphics().drawImage(originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH), 0, 0, null);
+        return scaledImage;
     }
     
    

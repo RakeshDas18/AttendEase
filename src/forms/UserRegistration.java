@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import utility.BDUtility;
 
 /**
  *
@@ -143,6 +144,11 @@ public class UserRegistration extends javax.swing.JFrame {
 
         btnRegister.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnRegister.setText("Register");
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterActionPerformed(evt);
+            }
+        });
 
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnClear.setText("Clear");
@@ -325,6 +331,28 @@ public class UserRegistration extends javax.swing.JFrame {
         clearForm();
     }//GEN-LAST:event_btnClearActionPerformed
 
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegisterActionPerformed
+
+    
+    
+    private String saveImage(String email){
+        if(originalImage != null && selectedFile != null){
+            try{
+                String savePath = BDUtility.getPath("images\\");
+                String extension = BDUtility.getFileExtension(selectedFile.getName());
+                String imageName = email+"."+extension;
+                File saveFile = new File(savePath+imageName);
+                BufferedImage scaledImage = BDUtility.scaleImage(originalImage, ImageIO.read(selectedFile));
+                ImageIO.write(scaledImage, extension, saveFile);
+                return imageName;
+            } catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
+        return null;
+    }
     
     
     private void clearForm(){
