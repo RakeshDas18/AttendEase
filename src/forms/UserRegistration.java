@@ -51,15 +51,14 @@ public class UserRegistration extends javax.swing.JFrame {
         txtState = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtCountry = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        radioFemale = new javax.swing.JRadioButton();
+        radioMale = new javax.swing.JRadioButton();
         jInternalFrame1 = new javax.swing.JInternalFrame();
         lblImage = new javax.swing.JLabel();
         btnRegister = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(850, 600));
         setMinimumSize(new java.awt.Dimension(850, 600));
         setUndecorated(true);
 
@@ -107,11 +106,21 @@ public class UserRegistration extends javax.swing.JFrame {
 
         txtCountry.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jRadioButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jRadioButton1.setText("Female");
+        radioFemale.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        radioFemale.setText("Female");
+        radioFemale.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                radioFemaleItemStateChanged(evt);
+            }
+        });
 
-        jRadioButton2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jRadioButton2.setText("Male");
+        radioMale.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        radioMale.setText("Male");
+        radioMale.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                radioMaleItemStateChanged(evt);
+            }
+        });
 
         jInternalFrame1.setVisible(true);
 
@@ -156,9 +165,9 @@ public class UserRegistration extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(radioMale, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(27, 27, 27)
-                                .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(radioFemale, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -211,8 +220,8 @@ public class UserRegistration extends javax.swing.JFrame {
                         .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton2))
+                            .addComponent(radioFemale)
+                            .addComponent(radioMale))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
@@ -292,6 +301,20 @@ public class UserRegistration extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lblImageMouseClicked
 
+    private void radioMaleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_radioMaleItemStateChanged
+        // TODO add your handling code here:
+        if(radioMale.isSelected()){
+            radioFemale.setSelected(false);
+        }
+    }//GEN-LAST:event_radioMaleItemStateChanged
+
+    private void radioFemaleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_radioFemaleItemStateChanged
+        // TODO add your handling code here:
+        if(radioFemale.isSelected()){
+            radioMale.setSelected(false);
+        }
+    }//GEN-LAST:event_radioFemaleItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -340,9 +363,9 @@ public class UserRegistration extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JLabel lblImage;
+    private javax.swing.JRadioButton radioFemale;
+    private javax.swing.JRadioButton radioMale;
     private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtContact;
     private javax.swing.JTextField txtCountry;
