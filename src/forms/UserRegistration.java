@@ -146,6 +146,11 @@ public class UserRegistration extends javax.swing.JFrame {
 
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -315,6 +320,24 @@ public class UserRegistration extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_radioFemaleItemStateChanged
 
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+        clearForm();
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    
+    
+    private void clearForm(){
+        txtName.setText("");
+        txtEmail.setText("");
+        txtContact.setText("");
+        txtAddress.setText("");
+        txtState.setText("");
+        txtCountry.setText("");
+        radioMale.setSelected(false);
+        radioFemale.setSelected(false);
+        lblImage.setIcon(null);
+    }
     /**
      * @param args the command line arguments
      */
