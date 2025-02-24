@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import utility.BDUtility;
 
 /**
@@ -333,6 +334,24 @@ public class UserRegistration extends javax.swing.JFrame {
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         // TODO add your handling code here:
+        try {
+            String name = txtName.getText();
+            String gender = "";
+            if(radioMale.isSelected()){
+                gender = "Male";
+            } else if(radioFemale.isSelected()){
+                gender = "Female";
+            }
+            
+            String email = txtEmail.getText();
+            String emailRegex = "^[A-Za-z0-9+@[A-Za-z0-9.-]+$]";
+            if(!email.matches(emailRegex)){
+                JOptionPane.showMessageDialog(null, "Invalid Email", "Invalid", JOptionPane.ERROR_MESSAGE);
+            }
+                    
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     
