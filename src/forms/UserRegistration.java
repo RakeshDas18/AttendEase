@@ -347,6 +347,7 @@ public class UserRegistration extends javax.swing.JFrame {
             String emailRegex = "^[A-Za-z0-9+@[A-Za-z0-9.-]+$]";
             if(!email.matches(emailRegex)){
                 JOptionPane.showMessageDialog(null, "Invalid Email", "Invalid", JOptionPane.ERROR_MESSAGE);
+                return;
             }
                     
         } catch (Exception ex){
