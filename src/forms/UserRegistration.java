@@ -344,11 +344,23 @@ public class UserRegistration extends javax.swing.JFrame {
             }
             
             String email = txtEmail.getText();
-            String emailRegex = "^[A-Za-z0-9+@[A-Za-z0-9.-]+$]";
+            String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
             if(!email.matches(emailRegex)){
                 JOptionPane.showMessageDialog(null, "Invalid Email", "Invalid", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            
+            String contact = txtContact.getText();
+            String contactRegex = "^\\d{10}$";
+            if(!contact.matches(contactRegex)){
+                JOptionPane.showMessageDialog(null, "Invalid contact number!", "Invalid", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            String address = txtAddress.getText();
+            String state = txtState.getText();
+            String country = txtCountry.getText();
+            String uniqueRegId = "" + System.nanoTime() + System.nanoTime() + System.nanoTime() + System.nanoTime();
                     
         } catch (Exception ex){
             ex.printStackTrace();
