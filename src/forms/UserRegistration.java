@@ -4,6 +4,7 @@
  */
 package forms;
 
+import dao.ConnectionProvider;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -14,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import utility.BDUtility;
+import java.sql.Connection;
 
 /**
  *
@@ -361,6 +363,18 @@ public class UserRegistration extends javax.swing.JFrame {
             String state = txtState.getText();
             String country = txtCountry.getText();
             String uniqueRegId = "" + System.nanoTime() + System.nanoTime() + System.nanoTime() + System.nanoTime();
+            
+            if(name.isEmpty() || email.isEmpty() || contact.isEmpty() || address.isEmpty() || state.isEmpty() || country.isEmpty() || uniqueRegId.isEmpty() || gender.isEmpty()){
+                JOptionPane.showMessageDialog(null, "One or more fields are empty!", "Field Empty!", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            Connection connection = new ConnectionProvider().getCon();
+            try {
+                
+            } catch (Exception ex){
+                ex.printStackTrace();
+            }
                     
         } catch (Exception ex){
             ex.printStackTrace();
