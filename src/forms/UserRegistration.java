@@ -16,6 +16,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import utility.BDUtility;
 import java.sql.Connection;
+import java.sql.*;
 
 /**
  *
@@ -369,15 +370,46 @@ public class UserRegistration extends javax.swing.JFrame {
                 return;
             }
             
-            Connection connection = new ConnectionProvider().getCon();
+            Connection connection = ConnectionProvider.getCon();
             try {
+                Statement st = connection.createStatement();
+                ResultSet rs = st.executeQuery("select * from userdetails where email = '" + email + "'");
+//                ResultSet rs = st.excuteQuery("select * from userdetails where email = '" + email + "'");
+                
+                if(rs.next()){
+                    JOptionPane.showMessageDialog(null, "Duplicate Email!", "Duplicate", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
                 
             } catch (Exception ex){
                 ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, ex);
             }
+            
+            String imageName = saveImage(email);
+            
+            String insertQuery = "INSERT INTO userdetails (name, gender, email, contact, address, state, country, uniqueregid, imagename) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            
+            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+            
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, gender);
+            preparedStatement.setString(3, email);
+            preparedStatement.setString(4, contact);
+            preparedStatement.setString(5, address);
+            preparedStatement.setString(6, state);
+            preparedStatement.setString(7, country);
+            preparedStatement.setString(8, uniqueRegId);
+            preparedStatement.setString(9, imageName);
+            
+            preparedStatement.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "User Registered Successfully!");
+            
                     
         } catch (Exception ex){
             ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, ex);
         }
     }//GEN-LAST:event_btnRegisterActionPerformed
 
