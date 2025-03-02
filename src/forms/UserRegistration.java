@@ -373,7 +373,7 @@ public class UserRegistration extends javax.swing.JFrame {
             Connection connection = ConnectionProvider.getCon();
             try {
                 Statement st = connection.createStatement();
-                ResultSet rs = st.executeQuery("select * from userdetails where email = '" + email + "'");
+                ResultSet rs = st.executeQuery("select * from userdetails where email = '" + email.trim() + "'");
 //                ResultSet rs = st.excuteQuery("select * from userdetails where email = '" + email + "'");
                 
                 if(rs.next()){

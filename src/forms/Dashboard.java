@@ -45,7 +45,6 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1366, 768));
         setMinimumSize(new java.awt.Dimension(1366, 768));
         setUndecorated(true);
 
@@ -76,6 +75,11 @@ public class Dashboard extends javax.swing.JFrame {
 
         btnViewUser.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnViewUser.setText("View User");
+        btnViewUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewUserActionPerformed(evt);
+            }
+        });
 
         btnViewAttendance.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnViewAttendance.setText("View Attendance");
@@ -175,6 +179,11 @@ public class Dashboard extends javax.swing.JFrame {
     private void btnRegisterUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterUserActionPerformed
         BDUtility.openForm(UserRegistration.class.getSimpleName(), new UserRegistration());
     }//GEN-LAST:event_btnRegisterUserActionPerformed
+
+    private void btnViewUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewUserActionPerformed
+        // TODO add your handling code here:
+        BDUtility.openForm(ViewUser.class.getSimpleName(), new ViewUser());
+    }//GEN-LAST:event_btnViewUserActionPerformed
 
     /**
      * @param args the command line arguments
