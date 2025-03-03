@@ -4,6 +4,14 @@
  */
 package forms;
 
+import java.awt.Color;
+import javax.swing.table.DefaultTableModel;
+import java.sql.*;
+import dao.ConnectionProvider;
+import java.util.Objects;
+import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author LENOVO
@@ -15,6 +23,7 @@ public class ViewUser extends javax.swing.JFrame {
      */
     public ViewUser() {
         initComponents();
+        this.getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.BLACK));
     }
 
     /**
@@ -31,7 +40,7 @@ public class ViewUser extends javax.swing.JFrame {
         jInternalFrame1 = new javax.swing.JInternalFrame();
         lblImage = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        userTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
 
@@ -39,6 +48,11 @@ public class ViewUser extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(1223, 476));
         setMinimumSize(new java.awt.Dimension(1223, 476));
         setUndecorated(true);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         btnExit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnExit.setText("X");
@@ -70,7 +84,7 @@ public class ViewUser extends javax.swing.JFrame {
             .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        userTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null},
@@ -81,7 +95,7 @@ public class ViewUser extends javax.swing.JFrame {
                 "ID", "Name", "Gender", "Email", "Contact", "Address", "State", "Country", "RegID", "Image Name"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(userTable);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel2.setText("Search");
@@ -113,11 +127,11 @@ public class ViewUser extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(13, 13, 13)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel2)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(9, 9, 9))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
@@ -147,6 +161,49 @@ public class ViewUser extends javax.swing.JFrame {
         
     }//GEN-LAST:event_lblImageMouseClicked
 
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formComponentShown
+
+    private void fetchUser(String searchText) throws Exception {
+        DefaultTableModel model = (DefaultTableModel) userTable.getModel();
+        model.setRowCount(0);
+            
+        try{
+            Connection con = ConnectionProvider.getCon();
+            Statement st = con.createStatement();
+            String query = null;
+            
+            if(Objects.isNull(searchText)) {
+                query = "select * from userdetails";
+            } else {
+                query = "select * from userdetails where name like '%" + searchText + "%' or email like '%" + searchText + "%'";
+            }
+            
+//            ResultSet rs = st.excuteQuery(query);
+            ResultSet rs = st.executeQuery(query);
+            
+            while (rs.next()){
+                model.addRow(new Object[]{
+                    rs.getString("id"),
+                    rs.getString("name"),
+                    rs.getString("gender"),
+                    rs.getString("email"),
+                    rs.getString("contact"),
+                    rs.getString("address"),
+                    rs.getString("state"),
+                    rs.getString("country"),
+                    rs.getString("uniqueregid"),
+                    rs.getString("imagename"),
+                    
+                });
+                
+            }
+        } catch (Exception ex){
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Something went wrong!");
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -188,8 +245,8 @@ public class ViewUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblImage;
+    private javax.swing.JTable userTable;
     // End of variables declaration//GEN-END:variables
 }
