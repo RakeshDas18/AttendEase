@@ -3,9 +3,6 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[1223, 476]"/>
-    </Property>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[1223, 476]"/>
     </Property>
@@ -41,7 +38,7 @@
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="jTextField1" min="-2" pref="248" max="-2" attributes="0"/>
+                      <Component id="txtSearch" min="-2" pref="248" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="103" max="-2" attributes="0"/>
                       <Component id="btnExit" min="-2" pref="39" max="-2" attributes="0"/>
                   </Group>
@@ -64,7 +61,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField1" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
+                              <Component id="txtSearch" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
                           </Group>
                           <Component id="btnExit" min="-2" pref="35" max="-2" attributes="0"/>
                       </Group>
@@ -228,7 +225,11 @@
         <Property name="text" type="java.lang.String" value="Search"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField1">
+    <Component class="javax.swing.JTextField" name="txtSearch">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSearchActionPerformed"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtSearchKeyReleased"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
