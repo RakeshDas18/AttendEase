@@ -163,6 +163,11 @@ public class ViewUser extends javax.swing.JFrame {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
+        try {
+            fetchUser(null);
+        } catch (Exception ex){
+            
+        }
     }//GEN-LAST:event_formComponentShown
 
     private void fetchUser(String searchText) throws Exception {
