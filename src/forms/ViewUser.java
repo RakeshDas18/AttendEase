@@ -8,9 +8,14 @@ import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import dao.ConnectionProvider;
+import java.awt.Image;
+import java.io.File;
 import java.util.Objects;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.TableModel;
+import utility.BDUtility;
 
 /**
  *
@@ -94,6 +99,11 @@ public class ViewUser extends javax.swing.JFrame {
                 "ID", "Name", "Gender", "Email", "Contact", "Address", "State", "Country", "RegID", "Image Name"
             }
         ));
+        userTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                userTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(userTable);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -176,7 +186,7 @@ public class ViewUser extends javax.swing.JFrame {
         try {
             fetchUser(null);
         } catch (Exception ex){
-            
+            ex.printStackTrace();            
         }
     }//GEN-LAST:event_formComponentShown
 
@@ -189,9 +199,32 @@ public class ViewUser extends javax.swing.JFrame {
         try {
             fetchUser(txtSearch.getText());
         } catch (Exception ex){
-            
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_txtSearchKeyReleased
+
+    private void userTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTableMouseClicked
+        // TODO add your handling code here:
+        int index = userTable.getSelectedRow();
+        TableModel model = userTable.getModel();
+        String name = Objects.isNull(model.getValueAt(index, 9)) ? null : model.getValueAt(index, 9).toString();
+        if(!Objects.isNull(name)){
+            String imagePath = BDUtility.getPath("/images" + File.separator + name);
+            File imageFile = new File(imagePath);
+            
+            if(imageFile.exists()){
+                ImageIcon icon = new ImageIcon(imagePath);
+                Image image = icon.getImage().getScaledInstance(322, 286, Image.SCALE_SMOOTH);
+                ImageIcon resizedIcon = new ImageIcon(image);
+                lblImage.setIcon(resizedIcon);
+            } else {
+                lblImage.setIcon(null);
+                JOptionPane.showMessageDialog(null, "Either image has been deleted or not found", "Image not found!", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            lblImage.setIcon(null);
+        }
+    }//GEN-LAST:event_userTableMouseClicked
 
     private void fetchUser(String searchText) throws Exception {
         DefaultTableModel model = (DefaultTableModel) userTable.getModel();
