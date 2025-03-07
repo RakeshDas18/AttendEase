@@ -197,6 +197,7 @@ public class ViewUser extends javax.swing.JFrame {
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
         // TODO add your handling code here:
         try {
+            lblImage.setIcon(null);
             fetchUser(txtSearch.getText());
         } catch (Exception ex){
             ex.printStackTrace();
