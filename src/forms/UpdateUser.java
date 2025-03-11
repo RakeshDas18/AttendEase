@@ -6,9 +6,14 @@ package forms;
 
 import dao.ConnectionProvider;
 import java.awt.Color;
+import java.awt.Image;
+import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import java.sql.*;
+import java.util.Objects;
+import javax.swing.ImageIcon;
+import utility.BDUtility;
 
 /**
  *
@@ -313,6 +318,8 @@ public class UpdateUser extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnUpdateActionPerformed
 
+    String uniqueReg = null;
+    String existingImageName = null;
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
         String email = txtEmail.getText();
@@ -339,6 +346,23 @@ public class UpdateUser extends javax.swing.JFrame {
                 txtAddress.setText(rs.getString("address"));
                 txtState.setText(rs.getString("state"));
                 txtCountry.setText(rs.getString("country"));
+                uniqueReg = rs.getString("uniqueregid");
+                String imageNameDB = rs.getString("imagename");
+                existingImageName = Objects.isNull(imageNameDB) || imageNameDB.isEmpty() ? null : imageNameDB;
+                if(!Objects.isNull(existingImageName)){
+                    String imagePath = BDUtility.getPath("images" + File.separator + existingImageName);
+                    File imageFile = new File(imagePath);
+                    if(imageFile.exists()){
+                        ImageIcon icon = new ImageIcon(imagePath);
+                        Image image = icon.getImage().getScaledInstance(322, 286, Image.SCALE_SMOOTH);
+                        ImageIcon resizedIcon = new ImageIcon(image);
+                        lblImage.setIcon(resizedIcon);
+                    } else {
+                        lblImage.setIcon(null);
+                    }
+                } else {
+                    lblImage.setIcon(null);
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Email Not Found!", "Not Found", JOptionPane.WARNING_MESSAGE);
             }
