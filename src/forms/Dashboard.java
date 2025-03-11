@@ -182,7 +182,6 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void btnViewUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewUserActionPerformed
         // TODO add your handling code here:
-        BDUtility.openForm(UpdateUser.class.getSimpleName(), new UpdateUser());
         BDUtility.openForm(ViewUser.class.getSimpleName(), new ViewUser());
     }//GEN-LAST:event_btnViewUserActionPerformed
 
