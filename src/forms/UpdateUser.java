@@ -7,12 +7,20 @@ package forms;
 import dao.ConnectionProvider;
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import java.sql.*;
 import java.util.Objects;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import utility.BDUtility;
 
 /**
@@ -20,6 +28,9 @@ import utility.BDUtility;
  * @author LENOVO
  */
 public class UpdateUser extends javax.swing.JFrame {
+
+    String uniqueReg = null;
+    String existingImageName = null;
 
     /**
      * Creates new form UpdateUser
@@ -296,46 +307,88 @@ public class UpdateUser extends javax.swing.JFrame {
 
     private void radioFemaleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_radioFemaleItemStateChanged
         // TODO add your handling code here:
-        if(radioFemale.isSelected()){
+        if (radioFemale.isSelected()) {
             radioMale.setSelected(false);
         }
     }//GEN-LAST:event_radioFemaleItemStateChanged
 
     private void radioMaleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_radioMaleItemStateChanged
         // TODO add your handling code here:
-        if(radioMale.isSelected()){
+        if (radioMale.isSelected()) {
             radioFemale.setSelected(false);
         }
     }//GEN-LAST:event_radioMaleItemStateChanged
-
+    
+    BufferedImage originalImage = null;
+    File selectedFile = null;
     private void lblImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImageMouseClicked
         // TODO add your handling code here:
-        
+        JDialog dialog = new JDialog();
+        dialog.setUndecorated(true);
+        dialog.setSize(600, 400);
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG images", "jpg");
+        fileChooser.setFileFilter(filter);
+        fileChooser.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (e.getActionCommand().equals(JFileChooser.APPROVE_SELECTION)) {
+                    selectedFile = fileChooser.getSelectedFile();
+                    try {
+                        originalImage = ImageIO.read(selectedFile);
+
+                        int originalWidth = originalImage.getWidth();
+                        int originalHeight = originalImage.getHeight();
+
+                        int labelWidth = lblImage.getWidth();
+                        int labelHeight = lblImage.getHeight();
+
+                        double scaleX = (double) labelWidth / originalWidth;
+                        double scaleY = (double) labelHeight / originalHeight;
+
+                        double scale = Math.min(scaleX, scaleY);
+
+                        int scaledWidth = (int) (originalWidth * scale);
+                        int scaledHeight = (int) (originalHeight * scale);
+
+                        Image scaledImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+
+                        ImageIcon icon = new ImageIcon(scaledImage);
+
+                        lblImage.setIcon(icon);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                dialog.dispose();
+            }
+        });
+        dialog.add(fileChooser);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+
     }//GEN-LAST:event_lblImageMouseClicked
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btnUpdateActionPerformed
 
-    String uniqueReg = null;
-    String existingImageName = null;
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
         String email = txtEmail.getText();
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-        if(!email.matches(emailRegex)){
+        if (!email.matches(emailRegex)) {
             JOptionPane.showMessageDialog(null, "Invalid Email", "Invalid", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         try {
             Connection con = ConnectionProvider.getCon();
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select * from userdetails where  email = '" + email + "'");
-            if(rs.next()){
+            if (rs.next()) {
                 txtName.setText(rs.getString("name"));
-                if(rs.getString("gender").equalsIgnoreCase("male")){
+                if (rs.getString("gender").equalsIgnoreCase("male")) {
                     radioMale.setSelected(true);
                     radioFemale.setSelected(false);
                 } else {
@@ -349,10 +402,10 @@ public class UpdateUser extends javax.swing.JFrame {
                 uniqueReg = rs.getString("uniqueregid");
                 String imageNameDB = rs.getString("imagename");
                 existingImageName = Objects.isNull(imageNameDB) || imageNameDB.isEmpty() ? null : imageNameDB;
-                if(!Objects.isNull(existingImageName)){
+                if (!Objects.isNull(existingImageName)) {
                     String imagePath = BDUtility.getPath("images" + File.separator + existingImageName);
                     File imageFile = new File(imagePath);
-                    if(imageFile.exists()){
+                    if (imageFile.exists()) {
                         ImageIcon icon = new ImageIcon(imagePath);
                         Image image = icon.getImage().getScaledInstance(322, 286, Image.SCALE_SMOOTH);
                         ImageIcon resizedIcon = new ImageIcon(image);
@@ -366,8 +419,8 @@ public class UpdateUser extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "Email Not Found!", "Not Found", JOptionPane.WARNING_MESSAGE);
             }
-            
-        } catch (Exception ex){
+
+        } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, ex);
         }
