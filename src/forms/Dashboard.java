@@ -72,6 +72,11 @@ public class Dashboard extends javax.swing.JFrame {
 
         btnUpdateUser.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnUpdateUser.setText("Update User");
+        btnUpdateUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateUserActionPerformed(evt);
+            }
+        });
 
         btnViewUser.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnViewUser.setText("View User");
@@ -184,6 +189,11 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         BDUtility.openForm(ViewUser.class.getSimpleName(), new ViewUser());
     }//GEN-LAST:event_btnViewUserActionPerformed
+
+    private void btnUpdateUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateUserActionPerformed
+        // TODO add your handling code here:
+        BDUtility.openForm(UpdateUser.class.getSimpleName(), new UpdateUser());
+    }//GEN-LAST:event_btnUpdateUserActionPerformed
 
     /**
      * @param args the command line arguments

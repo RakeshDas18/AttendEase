@@ -298,8 +298,20 @@ public class UpdateUser extends javax.swing.JFrame {
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
+        clearForm();
     }//GEN-LAST:event_btnClearActionPerformed
 
+    private void clearForm(){
+        txtName.setText("");
+        txtEmail.setText("");
+        txtContact.setText("");
+        txtAddress.setText("");
+        txtState.setText("");
+        txtCountry.setText("");
+        radioMale.setSelected(false);
+        radioFemale.setSelected(false);
+        lblImage.setIcon(null);
+    }
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         // TODO add your handling code here:
         this.dispose();
