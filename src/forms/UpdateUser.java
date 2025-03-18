@@ -382,9 +382,102 @@ public class UpdateUser extends javax.swing.JFrame {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
+        try {
+            String name = txtName.getText();
+            String gender = "";
+            if(radioMale.isSelected()){
+                gender = "male";
+            } else {
+                gender = "female";
+            }
+            
+            String email = txtEmail.getText();
+            String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+            if(!email.matches(emailRegex)){
+                JOptionPane.showMessageDialog(null, "Invalid Email", "Invalid", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            String contact = txtContact.getText();
+            String contactRegex = "^\\d{10}$";
+            if(!contact.matches(contactRegex)){
+                JOptionPane.showMessageDialog(null, "Invalid contact number!", "Invalid", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            String address = txtAddress.getText();
+            String state = txtState.getText();
+            String country = txtCountry.getText();
+            
+            if(name.isEmpty() || email.isEmpty() || contact.isEmpty() || address.isEmpty() || state.isEmpty() || country.isEmpty() || uniqueReg.isEmpty() || gender.isEmpty()){
+                JOptionPane.showMessageDialog(null, "One or more fields are empty!", "Field Empty!", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            Connection connection = ConnectionProvider.getCon();
+            
+            try {
+                Statement st = connection.createStatement();
+                ResultSet rs = st.executeQuery("select * from userdetails where email = '" + email + "'");
+                if(!rs.next()){
+                    JOptionPane.showMessageDialog(null, "Email not found!", "Not Found!", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+                
+                String imageName = saveImage(email);
+                String updateQuery;
+                if(imageName != null){
+                    updateQuery = "UPDATE userdetails SET name = ?, gender = ?, contact = ?, address = ?, state = ?, country = ?, imageName = ? WHERE uniqueregid = ?";
+                } else {
+                    updateQuery = "UPDATE userdetails SET name = ?, gender = ?, contact = ?, address = ?, state = ?, country = ? WHERE uniqueregid = ?";
+                }
+                
+                PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
+                preparedStatement.setString(1, name);
+                preparedStatement.setString(2, gender);
+                preparedStatement.setString(3, contact);
+                preparedStatement.setString(4, address);
+                preparedStatement.setString(5, state);
+                preparedStatement.setString(6, country);
+                
+                if(imageName != null){
+                    preparedStatement.setString(7, imageName);
+                    preparedStatement.setString(8, uniqueReg);
+                } else {
+                    preparedStatement.setString(7, uniqueReg);
+                }
+                
+                preparedStatement.executeUpdate();
+                JOptionPane.showMessageDialog(null, "User Updated Successfully!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                clearForm();
+            } catch (Exception ex){
+                JOptionPane.showMessageDialog(null, ex);
+            }
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
 
     }//GEN-LAST:event_btnUpdateActionPerformed
 
+    
+    private String saveImage(String email){
+        if(originalImage != null && selectedFile != null){
+            try{
+                String savePath = BDUtility.getPath("images\\");
+                String extension = BDUtility.getFileExtension(selectedFile.getName());
+                String imageName = email+"."+extension;
+                File saveFile = new File(savePath+imageName);
+                BufferedImage scaledImage = BDUtility.scaleImage(originalImage, ImageIO.read(selectedFile));
+                ImageIO.write(scaledImage, extension, saveFile);
+                return imageName;
+            } catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
+        return null;
+    }
+    
+    
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
         String email = txtEmail.getText();
