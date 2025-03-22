@@ -4,6 +4,9 @@
  */
 package forms;
 
+import java.awt.Color;
+import javax.swing.BorderFactory;
+
 /**
  *
  * @author LENOVO
@@ -15,6 +18,7 @@ public class DeleteUser extends javax.swing.JFrame {
      */
     public DeleteUser() {
         initComponents();
+        this.getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.BLACK));
     }
 
     /**
@@ -36,6 +40,11 @@ public class DeleteUser extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1087, 491));
         setUndecorated(true);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("SEARCH");
@@ -115,6 +124,9 @@ public class DeleteUser extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formComponentShown
     /**
      * @param args the command line arguments
      */
