@@ -132,6 +132,7 @@ public class DeleteUser extends javax.swing.JFrame {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
+        fetchUser(null);
     }//GEN-LAST:event_formComponentShown
 
     private void fetchUser(String searchText) throws HeadlessException {
