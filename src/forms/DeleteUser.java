@@ -4,8 +4,14 @@
  */
 package forms;
 
+import dao.ConnectionProvider;
 import java.awt.Color;
+import java.awt.HeadlessException;
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import java.sql.*;
+import java.util.Objects;
 
 /**
  *
@@ -33,7 +39,7 @@ public class DeleteUser extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnExit = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        userTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
 
@@ -57,7 +63,7 @@ public class DeleteUser extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        userTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null}
             },
@@ -65,7 +71,7 @@ public class DeleteUser extends javax.swing.JFrame {
                 "ID", "NAME", "GENDER", "EMAIL", "CONTACT", "ADDRESS", "STATE", "COUNTRY", "REGISTRATION NO", "IMAGE NAME"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(userTable);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel2.setText("DELETE USER");
@@ -127,6 +133,39 @@ public class DeleteUser extends javax.swing.JFrame {
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
     }//GEN-LAST:event_formComponentShown
+
+    private void fetchUser(String searchText) throws HeadlessException {
+        DefaultTableModel model = (DefaultTableModel) userTable.getModel();
+        model.setRowCount(0);
+        try {
+            Connnection con = ConnectionProvider.getCon();
+            Statement statement = con.createStatement();
+            String query = null;
+            if(Objects.isNull(SearchText)){
+                query = "select * from userdetails";
+            } else {
+                query = "select * from userdetails where name like '" + searchText + "' or email like '" + searchText + "'";
+            }
+            ResultSet resultSet = statement.executeQuery(query);
+            while(resultSet.next()){
+                model.addRow(new Object[]{
+                    resultSet.getString("id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("gender"),
+                    resultSet.getString("email"),
+                    resultSet.getString("contact"),
+                    resultSet.getString("address"),
+                    resultSet.getString("state"),
+                    resultSet.getString("country"),
+                    resultSet.getString("uniqueregid"),
+                    resultSet.getString("imagename"),
+                });
+            }
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -167,7 +206,7 @@ public class DeleteUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable userTable;
     // End of variables declaration//GEN-END:variables
 }
