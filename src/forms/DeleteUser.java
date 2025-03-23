@@ -41,7 +41,7 @@ public class DeleteUser extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtSearch = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1087, 491));
@@ -76,7 +76,12 @@ public class DeleteUser extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel2.setText("DELETE USER");
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtSearch.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearchKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,7 +102,7 @@ public class DeleteUser extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1083, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -115,7 +120,7 @@ public class DeleteUser extends javax.swing.JFrame {
                         .addGap(5, 5, 5)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
@@ -135,17 +140,27 @@ public class DeleteUser extends javax.swing.JFrame {
         fetchUser(null);
     }//GEN-LAST:event_formComponentShown
 
+    private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
+        // TODO add your handling code here:
+        try {
+            fetchUser(txtSearch.getText());    
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_txtSearchKeyReleased
+
     private void fetchUser(String searchText) throws HeadlessException {
         DefaultTableModel model = (DefaultTableModel) userTable.getModel();
         model.setRowCount(0);
         try {
-            Connnection con = ConnectionProvider.getCon();
+            Connection con = ConnectionProvider.getCon();
             Statement statement = con.createStatement();
             String query = null;
-            if(Objects.isNull(SearchText)){
+            if(Objects.isNull(searchText)){
                 query = "select * from userdetails";
             } else {
-                query = "select * from userdetails where name like '" + searchText + "' or email like '" + searchText + "'";
+                query = "select * from userdetails where name like '%" + searchText + "%' or email like '%" + searchText + "%'";
+                
             }
             ResultSet resultSet = statement.executeQuery(query);
             while(resultSet.next()){
@@ -207,7 +222,7 @@ public class DeleteUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtSearch;
     private javax.swing.JTable userTable;
     // End of variables declaration//GEN-END:variables
 }
