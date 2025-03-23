@@ -142,10 +142,11 @@ public class DeleteUser extends javax.swing.JFrame {
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
         // TODO add your handling code here:
-        try {
-            fetchUser(txtSearch.getText());    
-        } catch (Exception ex){
-            ex.printStackTrace();
+        String searchText = txtSearch.getText();
+        if(Objects.isNull(searchText) || searchText.isEmpty()){
+            fetchUser(null);
+        } else {
+            fetchUser(txtSearch.getText());   
         }
     }//GEN-LAST:event_txtSearchKeyReleased
 
