@@ -72,6 +72,11 @@ public class DeleteUser extends javax.swing.JFrame {
                 "ID", "NAME", "GENDER", "EMAIL", "CONTACT", "ADDRESS", "STATE", "COUNTRY", "REGISTRATION NO", "IMAGE NAME"
             }
         ));
+        userTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                userTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(userTable);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -150,6 +155,21 @@ public class DeleteUser extends javax.swing.JFrame {
             fetchUser(txtSearch.getText());   
         }
     }//GEN-LAST:event_txtSearchKeyReleased
+
+    private void userTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTableMouseClicked
+        // TODO add your handling code here:
+        try {
+            int dialogResult = JOptionPane.showConfirmDialog(null, "* User details\n* Images\n* QR Codes\n* Attendance\n\nAssociated with this user will be deleted.\nAre you sure you want to proceed?", "Confirmation", JOptionPane.YES_NO_OPTION);
+            
+            if(dialogResult == JOptionPane.YES_OPTION){
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Deletion Cancelled!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Something went wrong", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_userTableMouseClicked
 
     private void fetchUser(String searchText) throws HeadlessException {
         DefaultTableModel model = (DefaultTableModel) userTable.getModel();
