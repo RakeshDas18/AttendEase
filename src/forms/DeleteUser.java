@@ -7,6 +7,7 @@ package forms;
 import dao.ConnectionProvider;
 import java.awt.Color;
 import java.awt.HeadlessException;
+import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -180,6 +181,19 @@ public class DeleteUser extends javax.swing.JFrame {
             }
         } catch (Exception ex){
             JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+    
+    private void deleteFile(String filePath){
+        File fileToDelete = new File(filePath);
+        if(fileToDelete.exists()){
+            if(fileToDelete.delete()){
+                System.out.println("File deleted successfully!");
+            } else {
+                System.out.println();
+            }
+        } else {
+            System.out.println("File doesn't exists.");
         }
     }
     
