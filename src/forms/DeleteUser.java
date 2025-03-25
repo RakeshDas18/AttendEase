@@ -13,6 +13,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.util.Objects;
+import javax.swing.table.TableModel;
+import utility.BDUtility;
 
 /**
  *
@@ -162,6 +164,13 @@ public class DeleteUser extends javax.swing.JFrame {
             int dialogResult = JOptionPane.showConfirmDialog(null, "* User details\n* Images\n* QR Codes\n* Attendance\n\nAssociated with this user will be deleted.\nAre you sure you want to proceed?", "Confirmation", JOptionPane.YES_NO_OPTION);
             
             if(dialogResult == JOptionPane.YES_OPTION){
+                int index = userTable.getSelectedRow();
+                TableModel model = userTable.getModel();
+                String email = model.getValueAt(index, 3).toString();
+                String imagePath = BDUtility.getPath("/images" + File.separator + email + ".jpg");
+                deleteFile(imagePath);
+                imagePath = BDUtility.getPath("/qrCodes" + File.separator + email + ".jpg");
+                deleteFile(imagePath);
                 
             } else {
                 JOptionPane.showMessageDialog(null, "Deletion Cancelled!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
