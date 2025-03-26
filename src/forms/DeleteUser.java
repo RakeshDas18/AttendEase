@@ -172,6 +172,14 @@ public class DeleteUser extends javax.swing.JFrame {
                 imagePath = BDUtility.getPath("/qrCodes" + File.separator + email + ".jpg");
                 deleteFile(imagePath);
                 
+                Connection connection = ConnectionProvider.getCon();
+                String attendanceDeleteQuery = "DELETE userattendance, userdetails FROM userdetails LEFT JOIN userattendance ON userattendance.userid = userdetails.id where userdetails.email = ?";
+                
+                PreparedStatement preparedStatement = connection.prepareStatement(attendanceDeleteQuery);
+                preparedStatement.executeUpdate();
+                fetchUser(null);
+                JOptionPane.showMessageDialog(null, "Deleted user successfully", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Deletion Cancelled!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
             }
