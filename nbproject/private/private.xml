@@ -6,7 +6,9 @@
             <file>file:/D:/AttendanceManagmentSoftwareBD/src/forms/ViewUser.java</file>
             <file>file:/D:/AttendanceManagmentSoftwareBD/src/forms/UpdateUser.java</file>
             <file>file:/D:/AttendanceManagmentSoftwareBD/src/forms/Login.java</file>
+            <file>file:/D:/AttendanceManagmentSoftwareBD/src/forms/GenerateQr.java</file>
             <file>file:/D:/AttendanceManagmentSoftwareBD/src/forms/UserRegistration.java</file>
+            <file>file:/D:/AttendanceManagmentSoftwareBD/src/utility/BDUtility.java</file>
             <file>file:/D:/AttendanceManagmentSoftwareBD/src/forms/Dashboard.java</file>
             <file>file:/D:/AttendanceManagmentSoftwareBD/src/forms/DeleteUser.java</file>
         </group>
