@@ -4,8 +4,12 @@
  */
 package forms;
 
+import dao.ConnectionProvider;
 import java.awt.Color;
 import javax.swing.BorderFactory;
+import javax.swing.table.DefaultTableModel;
+import java.sql.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -35,7 +39,7 @@ public class GenerateQr extends javax.swing.JFrame {
         jInternalFrame1 = new javax.swing.JInternalFrame();
         lblImage = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        userTable = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -43,6 +47,11 @@ public class GenerateQr extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(1101, 501));
         setMinimumSize(new java.awt.Dimension(1101, 501));
         setUndecorated(true);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setText("GENERATE USER QR CODE");
@@ -74,7 +83,7 @@ public class GenerateQr extends javax.swing.JFrame {
             .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        userTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -82,7 +91,7 @@ public class GenerateQr extends javax.swing.JFrame {
                 "ID", "Title 2", "GENDER", "EMAIL", "CONTACT", "ADDRESS", "STATE", "COUNTRY", "REGISTRATION ID"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(userTable);
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton1.setText("SAVE QR");
@@ -164,6 +173,31 @@ public class GenerateQr extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) userTable.getModel();
+        try {
+            Connection connection = ConnectionProvider.getCon();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("select * from userdetails");
+            while(resultSet.next()){
+                model.addRow(new Object[]{
+                    resultSet.getString("id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("gender"),
+                    resultSet.getString("email"),
+                    resultSet.getString("contact"),
+                    resultSet.getString("address"),
+                    resultSet.getString("state"),
+                    resultSet.getString("country"),
+                    resultSet.getString("uniqueregid"),
+                });
+            }
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Something went wrong");
+        }
+    }//GEN-LAST:event_formComponentShown
+
     /**
      * @param args the command line arguments
      */
@@ -206,7 +240,7 @@ public class GenerateQr extends javax.swing.JFrame {
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblImage;
+    private javax.swing.JTable userTable;
     // End of variables declaration//GEN-END:variables
 }
