@@ -4,12 +4,17 @@
  */
 package forms;
 
+import com.google.gson.Gson;
 import dao.ConnectionProvider;
 import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.TableModel;
+import net.glxn.qrgen.core.image.ImageType;
+import net.glxn.qrgen.javase.QRCode;
 
 /**
  *
@@ -91,6 +96,11 @@ public class GenerateQr extends javax.swing.JFrame {
                 "ID", "Title 2", "GENDER", "EMAIL", "CONTACT", "ADDRESS", "STATE", "COUNTRY", "REGISTRATION ID"
             }
         ));
+        userTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                userTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(userTable);
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -197,6 +207,42 @@ public class GenerateQr extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Something went wrong");
         }
     }//GEN-LAST:event_formComponentShown
+    
+    ByteArrayOutputStream out = null;
+    String email = null;
+    
+    private void userTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTableMouseClicked
+        // TODO add your handling code here:
+        int index = userTable.getSelectedRow();
+        TableModel model = userTable.getModel();
+        
+        String id = model.getValueAt(index, 0).toString();
+        String name = model.getValueAt(index, 1).toString();
+        email = model.getValueAt(index, 3).toString();
+        String registrationId = model.getValueAt(index, 8).toString();
+        
+        Map<String, String> data = new HashMap<>();
+        data.put("id", id);
+        data.put("name", name);
+        data.put("email", email);
+        data.put("registrationId", registrationId);
+        
+        Gson gson = new Gson();
+        String jsonData = gson.toJson(data);
+        
+//        out = QRCode.from(jsonData).withSize(322, 286).to(ImageType.PNG).stream();
+        out = QRCode.from(jsonData).withSize(322, 286).to(ImageType.PNG).stream();
+        
+        try {
+            byte[] imageData = out.toByteArray();
+            ImageIcon icon = new ImageIcon(imageData);
+            lblImage.setIcon(icon);
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+                
+        
+    }//GEN-LAST:event_userTableMouseClicked
 
     /**
      * @param args the command line arguments
