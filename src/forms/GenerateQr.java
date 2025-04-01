@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import dao.ConnectionProvider;
 import java.awt.Color;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
@@ -18,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 import net.glxn.qrgen.core.image.ImageType;
 import net.glxn.qrgen.javase.QRCode;
+import utility.BDUtility;
 
 /**
  *
@@ -182,7 +184,23 @@ public class GenerateQr extends javax.swing.JFrame {
         try {
            if(out == null){
                JOptionPane.showMessageDialog(null, "No QR Code Generated!");
+               return;
            }
+           
+           String defaultDir = BDUtility.getPath("qrCodes");
+            File directory = new File(defaultDir);
+            
+            if(!directory.exists()){
+                directory.mkdirs();
+            }
+            
+            File defaultFile = new File(directory, email + ".jpg");
+            try {
+                java.nio.file.Files.write(defaultFile.toPath(), out.toByteArray());
+                JOptionPane.showMessageDialog(null, "QR Code saved successfully!");
+            } catch (Exception ex){
+                JOptionPane.showMessageDialog(null, "Error saving QR Code", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (Exception ex){
             JOptionPane.showMessageDialog(null, "Somwthing went wrong!");
         }
