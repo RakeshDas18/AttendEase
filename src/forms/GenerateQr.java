@@ -7,9 +7,12 @@ package forms;
 import com.google.gson.Gson;
 import dao.ConnectionProvider;
 import java.awt.Color;
+import java.io.ByteArrayOutputStream;
 import javax.swing.BorderFactory;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
@@ -45,11 +48,10 @@ public class GenerateQr extends javax.swing.JFrame {
         lblImage = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnSaveQr = new javax.swing.JButton();
+        btnSaveQrAt = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1101, 501));
         setMinimumSize(new java.awt.Dimension(1101, 501));
         setUndecorated(true);
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -103,19 +105,19 @@ public class GenerateQr extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(userTable);
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton1.setText("SAVE QR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSaveQr.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnSaveQr.setText("SAVE QR");
+        btnSaveQr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnSaveQrActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton2.setText("SAVE QR AT");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnSaveQrAt.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnSaveQrAt.setText("SAVE QR AT");
+        btnSaveQrAt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnSaveQrAtActionPerformed(evt);
             }
         });
 
@@ -139,9 +141,9 @@ public class GenerateQr extends javax.swing.JFrame {
                         .addContainerGap())))
             .addGroup(layout.createSequentialGroup()
                 .addGap(233, 233, 233)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSaveQr, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(107, 107, 107)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSaveQrAt, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -157,8 +159,8 @@ public class GenerateQr extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnSaveQr)
+                    .addComponent(btnSaveQrAt))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -175,13 +177,20 @@ public class GenerateQr extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_lblImageMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnSaveQrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveQrActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        try {
+           if(out == null){
+               JOptionPane.showMessageDialog(null, "No QR Code Generated!");
+           }
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Somwthing went wrong!");
+        }
+    }//GEN-LAST:event_btnSaveQrActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnSaveQrAtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveQrAtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnSaveQrAtActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
@@ -281,8 +290,8 @@ public class GenerateQr extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnSaveQr;
+    private javax.swing.JButton btnSaveQrAt;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
