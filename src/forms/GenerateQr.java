@@ -208,6 +208,14 @@ public class GenerateQr extends javax.swing.JFrame {
 
     private void btnSaveQrAtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveQrAtActionPerformed
         // TODO add your handling code here:
+        try {
+            if(out == null){
+                JOptionPane.showMessageDialog(this, "No QR Code generated!");
+                return;
+            }
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Something went wrong!");
+        }
     }//GEN-LAST:event_btnSaveQrAtActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
