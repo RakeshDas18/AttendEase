@@ -15,6 +15,7 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 import net.glxn.qrgen.core.image.ImageType;
@@ -212,6 +213,22 @@ public class GenerateQr extends javax.swing.JFrame {
             if(out == null){
                 JOptionPane.showMessageDialog(this, "No QR Code generated!");
                 return;
+            }
+            
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Save QR Code At");
+            fileChooser.setSelectedFile(new File(email + ".png"));
+            int userSelection = fileChooser.showSaveDialog(this);
+            
+            if(userSelection == JFileChooser.APPROVE_OPTION){
+                File fileToSave = fileChooser.getSelectedFile();
+                
+                try {
+                    java.nio.file.Files.write(fileToSave.toPath(), out.toByteArray());
+                    JOptionPane.showConfirmDialog(this, "QR Code successfully");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Error saving QR Code", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         } catch (Exception ex){
             JOptionPane.showMessageDialog(null, "Something went wrong!");
