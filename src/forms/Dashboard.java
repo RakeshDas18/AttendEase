@@ -99,6 +99,11 @@ public class Dashboard extends javax.swing.JFrame {
 
         btnGenerateQr.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnGenerateQr.setText("Generate QR");
+        btnGenerateQr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerateQrActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jLabel2.setText("USER SETTINGS");
@@ -204,6 +209,11 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         BDUtility.openForm(DeleteUser.class.getSimpleName(), new DeleteUser());
     }//GEN-LAST:event_btnDeleteUserActionPerformed
+
+    private void btnGenerateQrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateQrActionPerformed
+        // TODO add your handling code here:
+        BDUtility.openForm(GenerateQr.class.getSimpleName(), new GenerateQr());
+    }//GEN-LAST:event_btnGenerateQrActionPerformed
 
     /**
      * @param args the command line arguments
