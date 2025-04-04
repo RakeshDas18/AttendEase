@@ -5,9 +5,7 @@
         <group>
             <file>file:/D:/AttendanceManagmentSoftwareBD/src/forms/UpdateUser.java</file>
             <file>file:/D:/AttendanceManagmentSoftwareBD/src/forms/GenerateQr.java</file>
-            <file>file:/D:/AttendanceManagmentSoftwareBD/src/forms/Login.java</file>
-            <file>file:/D:/AttendanceManagmentSoftwareBD/src/forms/DeleteUser.java</file>
-            <file>file:/D:/AttendanceManagmentSoftwareBD/src/forms/Dashboard.java</file>
+            <file>file:/D:/AttendanceManagmentSoftwareBD/src/forms/ViewQrs.java</file>
         </group>
     </open-files>
 </project-private>

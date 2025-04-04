@@ -4,6 +4,10 @@
  */
 package forms;
 
+import java.awt.Color;
+import javax.swing.BorderFactory;
+import utility.BDUtility;
+
 /**
  *
  * @author LENOVO
@@ -120,48 +124,7 @@ public class ViewQrs extends javax.swing.JFrame {
 
     private void lblImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImageMouseClicked
         // TODO add your handling code here:
-        JDialog dialog = new JDialog();
-        dialog.setUndecorated(true);
-        dialog.setSize(600, 400);
-        JFileChooser fileChooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG images", "jpg");
-        fileChooser.setFileFilter(filter);
-        fileChooser.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (e.getActionCommand().equals(JFileChooser.APPROVE_SELECTION)) {
-                    selectedFile = fileChooser.getSelectedFile();
-                    try {
-                        originalImage = ImageIO.read(selectedFile);
-
-                        int originalWidth = originalImage.getWidth();
-                        int originalHeight = originalImage.getHeight();
-
-                        int labelWidth = lblImage.getWidth();
-                        int labelHeight = lblImage.getHeight();
-
-                        double scaleX = (double) labelWidth / originalWidth;
-                        double scaleY = (double) labelHeight / originalHeight;
-
-                        double scale = Math.min(scaleX, scaleY);
-
-                        int scaledWidth = (int) (originalWidth * scale);
-                        int scaledHeight = (int) (originalHeight * scale);
-
-                        Image scaledImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
-
-                        ImageIcon icon = new ImageIcon(scaledImage);
-
-                        lblImage.setIcon(icon);
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                }
-                dialog.dispose();
-            }
-        });
-        dialog.add(fileChooser);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
+        
     }//GEN-LAST:event_lblImageMouseClicked
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
