@@ -19,6 +19,7 @@ public class ViewQrs extends javax.swing.JFrame {
      */
     public ViewQrs() {
         initComponents();
+        this.getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.BLACK));
     }
 
     /**
