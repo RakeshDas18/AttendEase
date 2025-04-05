@@ -69,6 +69,11 @@ public class Dashboard extends javax.swing.JFrame {
 
         btnViewQrs.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnViewQrs.setText("View QRs");
+        btnViewQrs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewQrsActionPerformed(evt);
+            }
+        });
 
         btnUpdateUser.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnUpdateUser.setText("Update User");
@@ -214,6 +219,11 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         BDUtility.openForm(GenerateQr.class.getSimpleName(), new GenerateQr());
     }//GEN-LAST:event_btnGenerateQrActionPerformed
+
+    private void btnViewQrsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewQrsActionPerformed
+        // TODO add your handling code here:
+        BDUtility.openForm(ViewQrs.class.getSimpleName(), new ViewQrs());
+    }//GEN-LAST:event_btnViewQrsActionPerformed
 
     /**
      * @param args the command line arguments
