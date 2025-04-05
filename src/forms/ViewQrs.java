@@ -5,7 +5,9 @@
 package forms;
 
 import java.awt.Color;
+import java.io.File;
 import javax.swing.BorderFactory;
+import javax.swing.table.DefaultTableModel;
 import utility.BDUtility;
 
 /**
@@ -39,10 +41,13 @@ public class ViewQrs extends javax.swing.JFrame {
         tblQrList = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(764, 460));
         setMinimumSize(new java.awt.Dimension(764, 460));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(764, 460));
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         jInternalFrame1.setVisible(true);
 
@@ -76,13 +81,13 @@ public class ViewQrs extends javax.swing.JFrame {
 
         tblQrList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "EMAIL"
+                "EMAIL", "SIZE"
             }
         ));
         jScrollPane1.setViewportView(tblQrList);
@@ -132,6 +137,19 @@ public class ViewQrs extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) tblQrList.getModel();
+        File directory = new File(BDUtility.getPath("/qrCodes"));
+        File[] files = directory.listFiles();
+        
+        if(files != null){
+            for(File file : files){
+                model.addRow(new Object[] {file.getName(), file.length()});
+            }
+        }
+    }//GEN-LAST:event_formComponentShown
 
     /**
      * @param args the command line arguments
