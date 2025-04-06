@@ -5,9 +5,12 @@
 package forms;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.io.File;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import utility.BDUtility;
 
 /**
@@ -90,6 +93,11 @@ public class ViewQrs extends javax.swing.JFrame {
                 "EMAIL", "SIZE"
             }
         ));
+        tblQrList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblQrListMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblQrList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -150,6 +158,18 @@ public class ViewQrs extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_formComponentShown
+
+    private void tblQrListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblQrListMouseClicked
+        // TODO add your handling code here:
+        int index = tblQrList.getSelectedRow();
+        TableModel model = tblQrList.getModel();
+        String name = model.getValueAt(index, 0).toString();
+        ImageIcon icon = new ImageIcon(BDUtility.getPath("/qrCodes" + File.separator + name));
+        Image image = icon.getImage().getScaledInstance(322, 286, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(image);
+        
+        lblImage.setIcon(resizedIcon);
+    }//GEN-LAST:event_tblQrListMouseClicked
 
     /**
      * @param args the command line arguments
