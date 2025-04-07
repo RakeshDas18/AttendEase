@@ -66,6 +66,11 @@ public class Dashboard extends javax.swing.JFrame {
 
         btnMarkAttendance.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnMarkAttendance.setText("Mark Attendance");
+        btnMarkAttendance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMarkAttendanceActionPerformed(evt);
+            }
+        });
 
         btnViewQrs.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnViewQrs.setText("View QRs");
@@ -224,6 +229,11 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         BDUtility.openForm(ViewQrs.class.getSimpleName(), new ViewQrs());
     }//GEN-LAST:event_btnViewQrsActionPerformed
+
+    private void btnMarkAttendanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarkAttendanceActionPerformed
+        // TODO add your handling code here:
+        BDUtility.openForm(MarkAttendance.class.getSimpleName(), new MarkAttendance());
+    }//GEN-LAST:event_btnMarkAttendanceActionPerformed
 
     /**
      * @param args the command line arguments
