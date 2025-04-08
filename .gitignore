@@ -2,3 +2,5 @@ config.properties
 build/classes/images/
 src/images/
 src/qrCodes
+build/classes/images
+build/classes/qrCodes
