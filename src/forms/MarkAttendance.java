@@ -3,10 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package forms;
-
+import com.github.sarxos.webcam.WebcamPanel;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import javax.swing.BorderFactory;
 import javax.swing.Timer;
 
@@ -14,11 +17,16 @@ import javax.swing.Timer;
  *
  * @author LENOVO
  */
-public class MarkAttendance extends javax.swing.JFrame {
+public class MarkAttendance extends javax.swing.JFrame implements Runnable, ThreadFactory {
 
     /**
      * Creates new form MarkAttendance
      */
+    
+    private WebcamPanel panel = null;
+    private Webcam webcam = null;
+    private ExecutorService executorService = Executors.newSingleThreadExecutor(this);
+    
     public MarkAttendance() {
         initComponents();
         this.getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.BLACK));
@@ -207,4 +215,14 @@ public class MarkAttendance extends javax.swing.JFrame {
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblTime;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Thread newThread(Runnable r) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
