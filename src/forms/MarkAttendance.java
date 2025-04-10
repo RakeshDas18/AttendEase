@@ -26,10 +26,12 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
     private WebcamPanel panel = null;
     private Webcam webcam = null;
     private ExecutorService executorService = Executors.newSingleThreadExecutor(this);
+    private volatile boolean running = true;
     
     public MarkAttendance() {
         initComponents();
         this.getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.BLACK));
+        initWebcam();
         
         Timer timer = new Timer(1, e->updateTime());
         timer.start();
@@ -223,6 +225,10 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
 
     @Override
     public Thread newThread(Runnable r) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void initWebcam() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
