@@ -3,15 +3,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package forms;
+import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.Result;
+import com.google.zxing.common.HybridBinarizer;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import javax.swing.BorderFactory;
 import javax.swing.Timer;
+import org.netbeans.lib.awtextra.AbsoluteConstraints;
+import utility.BDUtility;
 
 /**
  *
@@ -25,7 +38,7 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
     
     private WebcamPanel panel = null;
     private Webcam webcam = null;
-    private ExecutorService executorService = Executors.newSingleThreadExecutor(this);
+    private ExecutorService executor = Executors.newSingleThreadExecutor(this);
     private volatile boolean running = true;
     
     public MarkAttendance() {
@@ -53,7 +66,7 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
 
         jLabel2 = new javax.swing.JLabel();
         btnExit = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        webCamPanel = new javax.swing.JPanel();
         lblImage = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -76,14 +89,14 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout webCamPanelLayout = new javax.swing.GroupLayout(webCamPanel);
+        webCamPanel.setLayout(webCamPanelLayout);
+        webCamPanelLayout.setHorizontalGroup(
+            webCamPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 689, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        webCamPanelLayout.setVerticalGroup(
+            webCamPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 518, Short.MAX_VALUE)
         );
 
@@ -112,7 +125,7 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(44, 44, 44)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(webCamPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(112, 112, 112)
@@ -145,7 +158,7 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(webCamPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -211,16 +224,59 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblCheck;
     private javax.swing.JLabel lblImage;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblTime;
+    private javax.swing.JPanel webCamPanel;
     // End of variables declaration//GEN-END:variables
 
+    Map<String, String> resultMap = new HashMap<String, String>();
+    
+    
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        do {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex){
+                
+            }
+            
+            try {
+                Result result = null;
+                BufferedImage image = null;
+                if(webcam.isOpen()){
+                    if((image = webcam.getImage()) == null){
+                        continue;
+                    }
+                }
+                
+                LuminanceSource source = new BufferedImageLuminanceSource(image);
+                BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+                
+                try {
+                    result = new MultiFormatReader().decode(bitmap);
+                } catch (NotFoundException ex) {
+                    
+                }
+                
+                if(result != null){
+                    String jsonString = result.getText();
+                    Gson gson = new Gson();
+                    java.lang.reflect.Type type = new TypeToken<Map<String, String>>(){
+                        
+                    }.getType();
+                    resultMap = gson.fromJson(jsonString, type);
+                    
+                    String finalPath = BDUtility.getPath("images\\" + resultMap.get("email") + ".jpg");
+                    CircularImageFrame(finalPath);
+                }
+                
+            } catch (Exception ex){
+                
+            }
+        } while(true);
     }
 
     @Override
@@ -229,6 +285,32 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
     }
 
     private void initWebcam() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        webcam = Webcam.getDefault();
+        if(webcam != null){
+            Dimension[] resolutions = webcam.getViewSizes();
+            Dimension maxResolution = resolution[resolutions.length - 1];
+            
+            if(webcam.isOpen()){
+                webcam.close();
+            }
+            
+            webcam.setViewSize(maxResolution);
+            webcam.open();
+            
+            panel = new WebcamPanel(webcam);
+            panel.setPreferredSize(maxResolution);
+            panel.setFPSDisplayed(true);
+            
+            webCamPanel.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 689, 518));
+            executor.execute(this);
+            executor.shutdown();
+        } else {
+            System.out.println("Issue with webcam!");
+        }
+    }
+
+    private void CircularImageFrame(String finalPath) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
