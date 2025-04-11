@@ -274,14 +274,15 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
                 }
                 
             } catch (Exception ex){
-                
+                ex.printStackTrace();
             }
-        } while(true);
+        } while(running);
     }
 
     @Override
     public Thread newThread(Runnable r) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Thread t = new Thread(r, "My Thread");
+        t.setDaemon(running);
     }
 
     private void initWebcam() {
