@@ -12,18 +12,20 @@ import com.google.zxing.LuminanceSource;
 import com.google.zxing.MultiFormatReader;
 import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import javax.swing.BorderFactory;
 import javax.swing.Timer;
-import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import utility.BDUtility;
 
 /**
@@ -282,15 +284,16 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
     @Override
     public Thread newThread(Runnable r) {
         Thread t = new Thread(r, "My Thread");
-        t.setDaemon(running);
+        t.setDaemon(true);
+        return t;
     }
 
     private void initWebcam() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//        webcam = Webcam.getDefault();
         webcam = Webcam.getDefault();
         if(webcam != null){
-            Dimension[] resolutions = webcam.getViewSizes();
-            Dimension maxResolution = resolution[resolutions.length - 1];
+            Dimension[] resolution = webcam.getViewSizes();
+            Dimension maxResolution = resolution[resolution.length - 1];
             
             if(webcam.isOpen()){
                 webcam.close();
