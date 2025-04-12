@@ -278,6 +278,12 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
         t.setDaemon(true);
         return t;
     }
+    
+    private void stopWebcam(){
+        if(webcam != null && webcam.isOpen()){
+            webcam.close();
+        }
+    }
 
     private void initWebcam() {
 //        webcam = Webcam.getDefault();
