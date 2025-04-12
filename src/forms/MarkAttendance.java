@@ -14,6 +14,7 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
+import dao.ConnectionProvider;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
@@ -27,6 +28,8 @@ import java.util.concurrent.ThreadFactory;
 import javax.swing.BorderFactory;
 import javax.swing.Timer;
 import utility.BDUtility;
+import java.sql.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -312,6 +315,20 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
     }
 
     private void CircularImageFrame(String finalPath) {
+        try {
+            Connection con = ConnectionProvider.getCon();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select * from userdetails where email = '" + resultMap.get("email") + "';");
+            if(!rs.next()){
+                showPopUpForCertainDuration("User is not registered or deleted!", "Invalid QR", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    private void showPopUpForCertainDuration(String user_is_not_registered_or_deleted, String invalid_QR, int ERROR_MESSAGE) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
