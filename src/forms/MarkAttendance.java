@@ -91,16 +91,7 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
             }
         });
 
-        javax.swing.GroupLayout webCamPanelLayout = new javax.swing.GroupLayout(webCamPanel);
-        webCamPanel.setLayout(webCamPanelLayout);
-        webCamPanelLayout.setHorizontalGroup(
-            webCamPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 689, Short.MAX_VALUE)
-        );
-        webCamPanelLayout.setVerticalGroup(
-            webCamPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 518, Short.MAX_VALUE)
-        );
+        webCamPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("DATE");
@@ -145,7 +136,7 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
                                 .addComponent(jLabel3)
                                 .addGap(160, 160, 160)
                                 .addComponent(jLabel4)))))
-                .addContainerGap(199, Short.MAX_VALUE))
+                .addContainerGap(888, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,7 +165,7 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
                         .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
                         .addComponent(lblCheck, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addContainerGap(173, Short.MAX_VALUE))
         );
 
         pack();
