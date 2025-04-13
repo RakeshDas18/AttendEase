@@ -18,6 +18,7 @@ import dao.ConnectionProvider;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -29,6 +30,8 @@ import javax.swing.BorderFactory;
 import javax.swing.Timer;
 import utility.BDUtility;
 import java.sql.*;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -314,7 +317,9 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
         }
     }
 
-    private void CircularImageFrame(String finalPath) {
+    private BufferedImage imagee = null;
+    
+    private void CircularImageFrame(String imagePath) {
         try {
             Connection con = ConnectionProvider.getCon();
             Statement st = con.createStatement();
@@ -323,12 +328,28 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
                 showPopUpForCertainDuration("User is not registered or deleted!", "Invalid QR", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            
+            imagee = null;
+            File imageFile = new File(imagePath);
+            if(imageFile.exists()){
+                try {
+                    imagee = ImageIO.read(new File(imagePath));
+                    imagee = createCircularImage(imagee);
+                    ImageIcon icon = new ImageIcon(imagee);
+                } catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }
         } catch (Exception ex){
             ex.printStackTrace();
         }
     }
 
     private void showPopUpForCertainDuration(String user_is_not_registered_or_deleted, String invalid_QR, int ERROR_MESSAGE) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private BufferedImage createCircularImage(BufferedImage imagee) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
