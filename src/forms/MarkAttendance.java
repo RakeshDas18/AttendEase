@@ -336,6 +336,7 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
                     imagee = ImageIO.read(new File(imagePath));
                     imagee = createCircularImage(imagee);
                     ImageIcon icon = new ImageIcon(imagee);
+                    lblImage.setIcon(icon);
                 } catch (Exception ex){
                     ex.printStackTrace();
                 }
