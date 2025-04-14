@@ -17,6 +17,8 @@ import com.google.zxing.common.HybridBinarizer;
 import dao.ConnectionProvider;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -340,6 +342,20 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
                 } catch (Exception ex){
                     ex.printStackTrace();
                 }
+            } else {
+                BufferedImage imageeee = new BufferedImage(300, 300, BufferedImage.TYPE_INT_ARGB);
+                Graphics2D g2d = imageeee.createGraphics();
+                
+                g2d.setColor(Color.BLACK);
+                g2d.fillOval(25, 25, 250, 250);
+                
+                g2d.setFont(new Font("Serif", Font.BOLD, 250));
+                g2d.setColor(Color.WHITE);
+                g2d.drawString(String.valueOf(resultMap.get("name").charAt(0)).toUpperCase(), 75, 225);
+                
+                
+                ImageIcon imageIconn = new ImageIcon(imageeee);
+                lblImage.setIcon(imageIconn);
             }
         } catch (Exception ex){
             ex.printStackTrace();
