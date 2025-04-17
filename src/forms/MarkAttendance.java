@@ -34,6 +34,8 @@ import utility.BDUtility;
 import java.sql.*;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -356,7 +358,19 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
                 
                 ImageIcon imageIconn = new ImageIcon(imageeee);
                 lblImage.setIcon(imageIconn);
+                this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                this.pack();
+                this.setLocation(null);
+                this.setVisible(true);
             }
+            
+            lblName.setHorizontalAlignment(JLabel.CENTER);
+            lblName.setText(resultMap.get("name"));
+            if(!checkInCheckout()){
+                return;
+            }
+            
+            
         } catch (Exception ex){
             ex.printStackTrace();
         }
@@ -367,6 +381,10 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
     }
 
     private BufferedImage createCircularImage(BufferedImage imagee) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private boolean checkInCheckout() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
