@@ -19,6 +19,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.HeadlessException;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -32,6 +33,9 @@ import javax.swing.BorderFactory;
 import javax.swing.Timer;
 import utility.BDUtility;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -384,7 +388,31 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    private boolean checkInCheckout() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private boolean checkInCheckout() throws HeadlessException, SQLException {
+        String popUpHeader = null;
+        String popUpMessage = null;
+        Color color = null;
+        
+        Connection con = ConnectionProvider.getCon();
+        Statement st = con.createStatement();
+        
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        
+        ResultSet rs = st.executeQuery("select * from userattendace where date = '" + currentDate.format(dateFormatter) + "' and userid = " + Integer.valueOf(resultMap.get("id")) + ";");
+        
+        Connection connection = ConnectionProvider.getCon();
+        if(rs.next()){
+            String checkOutDateTime = rs.getString(4);
+            if(checkOutDateTime != null){
+                popUpMessage = "Already checkout for the day";
+                popUpHeader = "Invalid checkout";
+                showPopUpForCertainDuration(popUpMessage, popUpHeader, JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        }
     }
 }
