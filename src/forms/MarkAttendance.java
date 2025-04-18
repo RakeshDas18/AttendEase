@@ -402,7 +402,7 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
         LocalDateTime currentDateTime = LocalDateTime.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         
-        ResultSet rs = st.executeQuery("select * from userattendace where date = '" + currentDate.format(dateFormatter) + "' and userid = " + Integer.valueOf(resultMap.get("id")) + ";");
+        ResultSet rs = st.executeQuery("select * from userattendace where date = '" + currentDate.format(dateFormatter) + "' and userid= " + Integer.valueOf(resultMap.get("id")) + ";");
         
         Connection connection = ConnectionProvider.getCon();
         if(rs.next()){
