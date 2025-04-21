@@ -33,6 +33,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Timer;
 import utility.BDUtility;
 import java.sql.*;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -411,6 +412,25 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
                 popUpMessage = "Already checkout for the day";
                 popUpHeader = "Invalid checkout";
                 showPopUpForCertainDuration(popUpMessage, popUpHeader, JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            
+            String checkInDateTime = rs.getString(3);
+            LocalDateTime checkInLocalDateTime = LocalDateTime.parse(checkInDateTime, dateTimeFormatter);
+            Duration duration = Duration.between(checkInLocalDateTime, currentDateTime);
+            
+            long hours = duration.toHours();
+            long minutes = duration.minusHours(hours).toMinutes();
+            long seconds = duration.minusHours(hours).minusMinutes(minutes).getSeconds();
+            
+            if(!(hours >= 0 || (hours == 1 && minutes >= 5))){
+                long remainingMinutes = 4 - minutes;
+                long remainingSeconds = 60 - seconds;
+                
+                popUpMessage = String format("Your work duration is less than 5 minutes\nYou can check out after: \n$d minutes and %d seconds", remainingMinutes, remainingSeconds);
+                popUpHeader = "Duration Warning";
+                
+                showPopUpForCertainDuration(popUpMessage, popUpHeader, JOptionPane.WARNING_MESSAGE);
                 return false;
             }
         }
