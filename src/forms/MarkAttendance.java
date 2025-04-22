@@ -427,12 +427,24 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
                 long remainingMinutes = 4 - minutes;
                 long remainingSeconds = 60 - seconds;
                 
-                popUpMessage = String format("Your work duration is less than 5 minutes\nYou can check out after: \n$d minutes and %d seconds", remainingMinutes, remainingSeconds);
+                popUpMessage = String.format("Your work duration is less than 5 minutes\nYou can check out after: \n$d minutes and %d seconds", remainingMinutes, remainingSeconds);
                 popUpHeader = "Duration Warning";
                 
                 showPopUpForCertainDuration(popUpMessage, popUpHeader, JOptionPane.WARNING_MESSAGE);
                 return false;
             }
+            
+            String updateQuery = "update userattendance set checkout=?, workduration=? where date=? and userid=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
+            preparedStatement.setString(1, currentDateTime.format(dateTimeFormatter));
+            preparedStatement.setString(2, "" + hours + " Hours and " + minutes + " Minutes");
+            preparedStatement.setString(3, currentDate.format(dateFormatter));
+            preparedStatement.setString(4, resultMap.get("id"));
+            
+            preparedStatement.executeUpdate();
+            popUpHeader = "Checkout";
+            popUpMessage = "Checked out at " + currentDateTime.format(dateTimeFormatter) + "\nWork Duration " + hours + " Hours and " + minutes + " Minutes";
+            color = Color.RED;
         }
     }
 }
