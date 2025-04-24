@@ -445,6 +445,16 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
             popUpHeader = "Checkout";
             popUpMessage = "Checked out at " + currentDateTime.format(dateTimeFormatter) + "\nWork Duration " + hours + " Hours and " + minutes + " Minutes";
             color = Color.RED;
+        } else {
+            String insertQuery = "INSERT INTO USERATTENDANCE (userid, date, checkin) VALUES (?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+            preparedStatement.setString(1, resultMap.get("id"));
+            preparedStatement.setString(2, currentDate.format(dateFormatter));
+            preparedStatement.setString(3, currentDateTime.format(dateTimeFormatter));
+            preparedStatement.execute();
+            popUpHeader = "Check In";
+            popUpMessage = "Check in at " + currentDateTime.format(dateTimeFormatter);
+            color = Color.GREEN;
         }
     }
 }
