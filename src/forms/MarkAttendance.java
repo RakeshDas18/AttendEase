@@ -88,7 +88,7 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         lblTime = new javax.swing.JLabel();
-        lblCheck = new javax.swing.JLabel();
+        lblCheckInCheckOut = new javax.swing.JLabel();
         lblName = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -117,7 +117,7 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
         lblTime.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTime.setText("TIME");
 
-        lblCheck.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblCheckInCheckOut.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
         lblName.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
@@ -141,7 +141,7 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
                     .addGroup(layout.createSequentialGroup()
                         .addGap(131, 131, 131)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblCheck, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCheckInCheckOut, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(122, 122, 122)
@@ -179,7 +179,7 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
                         .addGap(18, 18, 18)
                         .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
-                        .addComponent(lblCheck, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lblCheckInCheckOut, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(173, Short.MAX_VALUE))
         );
 
@@ -232,7 +232,7 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel lblCheck;
+    private javax.swing.JLabel lblCheckInCheckOut;
     private javax.swing.JLabel lblImage;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblTime;
@@ -456,5 +456,13 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
             popUpMessage = "Check in at " + currentDateTime.format(dateTimeFormatter);
             color = Color.GREEN;
         }
+        
+        lblCheckInCheckOut.setHorizontalAlignment(JLabel.CENTER);
+        lblCheckInCheckOut.setText(popUpHeader);
+        lblCheckInCheckOut.setForeground(color);
+        lblCheckInCheckOut.setBackground(Color.DARK_GRAY);
+        lblCheckInCheckOut.setOpaque(true);
+        showPopUpForCertainDuration(popUpMessage, popUpHeader, JOptionPane.INFORMATION_MESSAGE);
+        return true;
     }
 }

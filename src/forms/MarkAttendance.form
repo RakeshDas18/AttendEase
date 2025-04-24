@@ -45,7 +45,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="lblCheck" min="-2" pref="242" max="-2" attributes="0"/>
+                          <Component id="lblCheckInCheckOut" min="-2" pref="242" max="-2" attributes="0"/>
                           <Component id="lblName" min="-2" pref="242" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -96,7 +96,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="lblName" min="-2" pref="37" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                      <Component id="lblCheck" min="-2" pref="37" max="-2" attributes="0"/>
+                      <Component id="lblCheckInCheckOut" min="-2" pref="37" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="173" max="32767" attributes="0"/>
@@ -156,7 +156,7 @@
         <Property name="text" type="java.lang.String" value="TIME"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblCheck">
+    <Component class="javax.swing.JLabel" name="lblCheckInCheckOut">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="18" style="1"/>
