@@ -20,6 +20,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -39,6 +41,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -381,8 +384,18 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
         }
     }
 
-    private void showPopUpForCertainDuration(String user_is_not_registered_or_deleted, String invalid_QR, int ERROR_MESSAGE) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private void showPopUpForCertainDuration(String popUpMessage, String popUpHeader, Integer iconId) throws HeadlessException {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        final JOptionPane optionPane = new JOptionPane(popUpMessage, iconId);
+        final JDialog dialog = optionPane.createDialog(popUpHeader);
+        Timer timer = new Timer(5000, new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                dialog.dispose();
+            }
+                
+        });
+                
     }
 
     private BufferedImage createCircularImage(BufferedImage imagee) {
@@ -463,6 +476,6 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
         lblCheckInCheckOut.setBackground(Color.DARK_GRAY);
         lblCheckInCheckOut.setOpaque(true);
         showPopUpForCertainDuration(popUpMessage, popUpHeader, JOptionPane.INFORMATION_MESSAGE);
-        return true;
+        return Boolean.TRUE;
     }
 }
