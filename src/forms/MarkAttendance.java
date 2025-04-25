@@ -392,10 +392,24 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
             @Override
             public void actionPerformed(ActionEvent e){
                 dialog.dispose();
+                clearUserDetails();
             }
                 
         });
+        timer.setRepeats(false);
+        timer.start();
+        dialog.setVisible(true);
                 
+    }
+    
+    private void clearUserDetails(){
+        lblCheckInCheckOut.setText("");
+        lblCheckInCheckOut.setBackground(null);
+        lblCheckInCheckOut.setForeground(null);
+        lblCheckInCheckOut.setOpaque(false);
+        lblName.setText("");
+        lblImage.setIcon(null);
+        
     }
 
     private BufferedImage createCircularImage(BufferedImage imagee) {
