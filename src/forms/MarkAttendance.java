@@ -18,6 +18,7 @@ import dao.ConnectionProvider;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
@@ -492,4 +493,12 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
         showPopUpForCertainDuration(popUpMessage, popUpHeader, JOptionPane.INFORMATION_MESSAGE);
         return Boolean.TRUE;
     }
+    
+   @Override
+   public void paint(Graphics g){
+       super.paint(g);
+       if(imagee != null){
+           g.drawImage(imagee, 0, 0, null);
+       }
+   }
 }
