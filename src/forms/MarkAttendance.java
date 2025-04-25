@@ -21,8 +21,10 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.HeadlessException;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -414,7 +416,21 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
     }
 
     private BufferedImage createCircularImage(BufferedImage imagee) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int diameter = 285;
+        BufferedImage resizedImage = new BufferedImage(diameter, diameter, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImage.createGraphics();
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(imagee, 0, 0, diameter, diameter, null);
+        g2.dispose();
+        BufferedImage circularImage = new BufferedImage(diameter, diameter, BufferedImage.TYPE_INT_ARGB);
+        g2 = circularImage.createGraphics();
+        Ellipse2D.Double circle = new Ellipse2D.Double(0, 0, diameter, diameter);
+        g2.setClip(circle);
+        g2.drawImage(resizedImage, 0, 0, null);
+        g2.dispose();
+        return circularImage;
+            
     }
 
     private boolean checkInCheckout() throws HeadlessException, SQLException {
