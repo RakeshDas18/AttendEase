@@ -197,6 +197,10 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
         // TODO add your handling code here:
         running = false;
         stopWebcam();
+        
+        if(executor != null && !executor.isShutdown()){
+            executor.shutdown();
+        }
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
