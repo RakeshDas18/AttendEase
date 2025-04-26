@@ -195,6 +195,8 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         // TODO add your handling code here:
+        running = false;
+        stopWebcam();
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
