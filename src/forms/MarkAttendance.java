@@ -377,7 +377,7 @@ public class MarkAttendance extends javax.swing.JFrame implements Runnable, Thre
                 lblImage.setIcon(imageIconn);
                 this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 this.pack();
-                this.setLocation(null);
+                this.setLocationRelativeTo(null);
                 this.setVisible(true);
             }
             
