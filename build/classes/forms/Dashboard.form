@@ -184,6 +184,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="View Attendance"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnViewAttendanceActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnDeleteUser">
       <Properties>
