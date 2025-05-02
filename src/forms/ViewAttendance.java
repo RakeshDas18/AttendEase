@@ -19,6 +19,9 @@ public class ViewAttendance extends javax.swing.JFrame {
     public ViewAttendance() {
         initComponents();
         this.getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.BLACK));
+        
+        dateChooserFrom.setDateFormatString("yyyy-MM-dd");
+        dateChooserTo.setDateFormatString("yyyy-MM-dd");
     }
 
     /**
@@ -84,6 +87,11 @@ public class ViewAttendance extends javax.swing.JFrame {
         dateChooserTo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         txtSearch.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearchActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setText("FROM");
@@ -125,6 +133,11 @@ public class ViewAttendance extends javax.swing.JFrame {
 
         btnResetFilter.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnResetFilter.setText("RESET FILTERS");
+        btnResetFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetFilterActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -227,6 +240,22 @@ public class ViewAttendance extends javax.swing.JFrame {
     private void checkBoxStateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxStateActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_checkBoxStateActionPerformed
+
+    private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchActionPerformed
+
+    private void btnResetFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetFilterActionPerformed
+        // TODO add your handling code here:
+        txtSearch.setText("");
+        dateChooserFrom.setDate(null);
+        dateChooserTo.setDate(null);
+        checkBoxContact.setSelected(false);
+        checkBoxAddress.setSelected(false);
+        checkBoxCountry.setSelected(false);
+        checkBoxState.setSelected(false);
+        checkBoxUniqueRegId.setSelected(false);
+    }//GEN-LAST:event_btnResetFilterActionPerformed
 
     /**
      * @param args the command line arguments
