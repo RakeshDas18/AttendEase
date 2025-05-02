@@ -4,6 +4,9 @@
  */
 package forms;
 
+import java.awt.Color;
+import javax.swing.BorderFactory;
+
 /**
  *
  * @author LENOVO
@@ -15,6 +18,7 @@ public class ViewAttendance extends javax.swing.JFrame {
      */
     public ViewAttendance() {
         initComponents();
+        this.getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.BLACK));
     }
 
     /**
