@@ -5,6 +5,12 @@
 package forms;
 
 import java.awt.Color;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import javax.swing.BorderFactory;
 
 /**
@@ -255,6 +261,8 @@ public class ViewAttendance extends javax.swing.JFrame {
         checkBoxCountry.setSelected(false);
         checkBoxState.setSelected(false);
         checkBoxUniqueRegId.setSelected(false);
+        
+        loadDataInTable();
     }//GEN-LAST:event_btnResetFilterActionPerformed
 
     /**
@@ -314,4 +322,44 @@ public class ViewAttendance extends javax.swing.JFrame {
     private javax.swing.JTextField txtSearch;
     private javax.swing.JTable userTable;
     // End of variables declaration//GEN-END:variables
+
+    private void loadDataInTable() {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<String> columns = new ArrayList<>(Arrays.asList(
+                "ID", "Name", "Gender", "Email", "Date", "CheckIn", "Checkout", "Work Duration"
+        ));
+        
+        String searchText = txtSearch.getText();
+        Date fromDateFromCal = dateChooserFrom.getDate();
+        LocalDate fromDate = null;
+        if(fromDateFromCal != null){
+            fromDate = fromDateFromCal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }
+        
+        Date toDateFromCal = dateChooserTo.getDate();
+        LocalDate toDate = null;
+        if(toDateFromCal != null){
+            toDate = toDateFromCal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }
+        
+        Long daysBetween = null;
+        if(fromDate != null && toDate != null){
+            daysBetween = countWeekdays(fromDate, toDate);
+        }
+    }
+
+    private Long countWeekdays(LocalDate start, LocalDate end) {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        long count = 0;
+        LocalDate date = start;
+        while(date.isBefore(end) || date.equals(end)){
+            if(!(date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY)){
+                count++;
+            }
+            
+            date = date.plusDays(1);
+        }
+        
+        return count;
+    }
 }
