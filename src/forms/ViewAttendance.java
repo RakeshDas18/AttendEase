@@ -346,6 +346,39 @@ public class ViewAttendance extends javax.swing.JFrame {
         if(fromDate != null && toDate != null){
             daysBetween = countWeekdays(fromDate, toDate);
         }
+        
+        Boolean contactInclude = checkBoxContact.isSelected();
+        Boolean addressInclude = checkBoxAddress.isSelected();
+        Boolean stateInclude = checkBoxState.isSelected();
+        Boolean countryInclude = checkBoxCountry.isSelected();
+        Boolean uniqueRegIdInclude = checkBoxUniqueRegId.isSelected();
+        
+        String sqlQuery = "Select ud.id, ud.name, ud.email, ua.date, ua.checkin, ua.checkout, ua.workduration";
+        if(contactInclude){
+            columns.add("Contact");
+            sqlQuery += ", ud.contact";
+        }
+        
+        if(addressInclude){
+            columns.add("Address");
+            sqlQuery += ", ud.address";
+        }
+        
+        if(stateInclude){
+            columns.add("State");
+            sqlQuery += ", ud.state";
+        }
+        
+        if(countryInclude){
+            columns.add("Country");
+            sqlQuery += ", ud.country";
+        }
+        
+        if(uniqueRegIdInclude){
+            columns.add("Unique Reg Id");
+            sqlQuery += ", ud.uniqueregid";
+        }
+        
     }
 
     private Long countWeekdays(LocalDate start, LocalDate end) {
