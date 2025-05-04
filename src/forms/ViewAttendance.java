@@ -4,6 +4,7 @@
  */
 package forms;
 
+import dao.ConnectionProvider;
 import java.awt.Color;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -12,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import java.sql.*;
 
 /**
  *
@@ -394,7 +398,76 @@ public class ViewAttendance extends javax.swing.JFrame {
                 }
             }
             
+            DefaultTableModel model = new DefaultTableModel();
+            model.setColumnIdentifiers(columns.toArray());
+            userTable.setModel(model);
             
+            try {
+                Connection con = ConnectionProvider.getCon();
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery(sqlQuery);
+                Long presentCount = 0l;
+                Long absentCount = 0l;
+                Set<String> emailList = new HashSet<>();
+                while(rs.next()){
+                    List<Object> row = new ArrayList<>();
+                    row.add(rs.getString("id"));
+                    row.add(rs.getString("name"));
+                    row.add(rs.getString("gender"));
+                    row.add(rs.getString("email"));
+                    emailList.add(rs.getString("email"));
+                    row.add(rs.getString("date"));
+                    row.add(rs.getString("checkin"));
+                    row.add(rs.getString("checkout"));
+                    row.add(rs.getString("workduration"));
+                    if(contactInclude){
+                        row.add(rs.getString("contact"));
+                    }
+                    if(addressInclude){
+                        row.add(rs.getString("address"));
+                    }
+                    if(stateInclude){
+                        row.add(rs.getString("state"));
+                    }
+                    if(countryInclude){
+                        row.add(rs.getString("country"));
+                    }
+                    if(uniqueRegIdInclude){
+                        row.add(rs.getString("uniqueregid"));
+                    }
+                    
+                    if(rs.getString("checkout") == null){
+                        absentCount++;
+                    } else {
+                        presentCount++;
+                    }
+                    
+                    model.addRow(row.toArray());
+                    
+                    if(emailList.size() == null){
+                        lblAbsent.setVisible(true);
+                        lblPresent.setVisible(true);
+                        presentLBL.setVisible(true);
+                        absentLBL.setVisible(true);
+                        lblPresent.setText(presentCount.toString());
+                        if(daysBetween != null && daysBetween > 0){
+                            absentCount = daysBetween - presentCount;
+                        }
+                        
+                        lblAbsent.setText(absentCount.toString());
+                    } else {
+                        lblAbsent.setVisible(false);
+                        lblPresent.setVisible(false);
+                        presentLBL.setVisible(false);
+                        absentLBL.setVisible(false);
+                    }
+                    
+                    
+                    
+                }
+            } catch (Exception ex){
+                JOptionPane.showMessageDialog(null, "Something went wrong.");
+            }
         
         }
 
