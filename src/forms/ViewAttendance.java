@@ -379,7 +379,24 @@ public class ViewAttendance extends javax.swing.JFrame {
             sqlQuery += ", ud.uniqueregid";
         }
         
-    }
+        sqlQuery += " FROM userdetails as ud INNER JOIN userattendance AS ua on ud.id = ua.userid";
+        if(searchText != null){
+            sqlQuery += "where (ud.name like '%" + searchText + "%' or ud.email like '%" + searchText + "%')";
+            if(fromDate != null && toDate != null){
+                sqlQuery += " AND ua.date BETWEEN '" + fromDate + "' AND '" + toDate + "'";
+            } else if (fromDate != null){
+                sqlQuery += " and ua.date = '" + fromDate + "'";
+            } else {
+                if(fromDate != null && toDate != null){
+                    sqlQuery += " where ua.date BETWEEN '" + fromDate + "' AND '" + toDate + "'";
+                } else if (fromDate != null){
+                    sqlQuery += " where ua.date = '" + fromDate + "'";
+                }
+            }
+            
+            
+        
+        }
 
     private Long countWeekdays(LocalDate start, LocalDate end) {
 //        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
