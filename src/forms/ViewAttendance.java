@@ -16,6 +16,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -29,7 +32,7 @@ public class ViewAttendance extends javax.swing.JFrame {
     public ViewAttendance() {
         initComponents();
         this.getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.BLACK));
-        
+
         dateChooserFrom.setDateFormatString("yyyy-MM-dd");
         dateChooserTo.setDateFormatString("yyyy-MM-dd");
     }
@@ -67,6 +70,11 @@ public class ViewAttendance extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1101, 501));
         setUndecorated(true);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel2.setText("VIEW ATTENDANCE");
@@ -265,9 +273,14 @@ public class ViewAttendance extends javax.swing.JFrame {
         checkBoxCountry.setSelected(false);
         checkBoxState.setSelected(false);
         checkBoxUniqueRegId.setSelected(false);
-        
+
         loadDataInTable();
     }//GEN-LAST:event_btnResetFilterActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        loadDataInTable();
+    }//GEN-LAST:event_formComponentShown
 
     /**
      * @param args the command line arguments
@@ -332,76 +345,76 @@ public class ViewAttendance extends javax.swing.JFrame {
         List<String> columns = new ArrayList<>(Arrays.asList(
                 "ID", "Name", "Gender", "Email", "Date", "CheckIn", "Checkout", "Work Duration"
         ));
-        
+
         String searchText = txtSearch.getText();
         Date fromDateFromCal = dateChooserFrom.getDate();
         LocalDate fromDate = null;
-        if(fromDateFromCal != null){
+        if (fromDateFromCal != null) {
             fromDate = fromDateFromCal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         }
-        
+
         Date toDateFromCal = dateChooserTo.getDate();
         LocalDate toDate = null;
-        if(toDateFromCal != null){
+        if (toDateFromCal != null) {
             toDate = toDateFromCal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         }
-        
+
         Long daysBetween = null;
-        if(fromDate != null && toDate != null){
+        if (fromDate != null && toDate != null) {
             daysBetween = countWeekdays(fromDate, toDate);
         }
-        
+
         Boolean contactInclude = checkBoxContact.isSelected();
         Boolean addressInclude = checkBoxAddress.isSelected();
         Boolean stateInclude = checkBoxState.isSelected();
         Boolean countryInclude = checkBoxCountry.isSelected();
         Boolean uniqueRegIdInclude = checkBoxUniqueRegId.isSelected();
-        
-        String sqlQuery = "Select ud.id, ud.name, ud.email, ua.date, ua.checkin, ua.checkout, ua.workduration";
-        if(contactInclude){
+
+        String sqlQuery = "Select ud.id, ud.name, ud.gender, ud.email, ua.date, ua.checkin, ua.checkout, ua.workduration";
+        if (contactInclude) {
             columns.add("Contact");
             sqlQuery += ", ud.contact";
         }
-        
-        if(addressInclude){
+
+        if (addressInclude) {
             columns.add("Address");
             sqlQuery += ", ud.address";
         }
-        
-        if(stateInclude){
+
+        if (stateInclude) {
             columns.add("State");
             sqlQuery += ", ud.state";
         }
-        
-        if(countryInclude){
+
+        if (countryInclude) {
             columns.add("Country");
             sqlQuery += ", ud.country";
         }
-        
-        if(uniqueRegIdInclude){
+
+        if (uniqueRegIdInclude) {
             columns.add("Unique Reg Id");
             sqlQuery += ", ud.uniqueregid";
         }
-        
+
         sqlQuery += " FROM userdetails as ud INNER JOIN userattendance AS ua on ud.id = ua.userid";
-        if(searchText != null){
-            sqlQuery += "where (ud.name like '%" + searchText + "%' or ud.email like '%" + searchText + "%')";
-            if(fromDate != null && toDate != null){
-                sqlQuery += " AND ua.date BETWEEN '" + fromDate + "' AND '" + toDate + "'";
-            } else if (fromDate != null){
-                sqlQuery += " and ua.date = '" + fromDate + "'";
+        if (searchText != null) {
+            sqlQuery += " where (ud.name like '%" + searchText + "%' or ud.email like '%" + searchText + "%');";
+            if (fromDate != null && toDate != null) {
+                sqlQuery += " AND ua.date BETWEEN '" + fromDate + "' AND '" + toDate + "';";
+            } else if (fromDate != null) {
+                sqlQuery += " and ua.date = '" + fromDate + "';";
             } else {
-                if(fromDate != null && toDate != null){
-                    sqlQuery += " where ua.date BETWEEN '" + fromDate + "' AND '" + toDate + "'";
-                } else if (fromDate != null){
-                    sqlQuery += " where ua.date = '" + fromDate + "'";
+                if (fromDate != null && toDate != null) {
+                    sqlQuery += " where ua.date BETWEEN '" + fromDate + "' AND '" + toDate + "';";
+                } else if (fromDate != null) {
+                    sqlQuery += " where ua.date = '" + fromDate + "';";
                 }
             }
-            
+
             DefaultTableModel model = new DefaultTableModel();
             model.setColumnIdentifiers(columns.toArray());
             userTable.setModel(model);
-            
+
             try {
                 Connection con = ConnectionProvider.getCon();
                 Statement st = con.createStatement();
@@ -409,7 +422,7 @@ public class ViewAttendance extends javax.swing.JFrame {
                 Long presentCount = 0l;
                 Long absentCount = 0l;
                 Set<String> emailList = new HashSet<>();
-                while(rs.next()){
+                while (rs.next()) {
                     List<Object> row = new ArrayList<>();
                     row.add(rs.getString("id"));
                     row.add(rs.getString("name"));
@@ -420,40 +433,40 @@ public class ViewAttendance extends javax.swing.JFrame {
                     row.add(rs.getString("checkin"));
                     row.add(rs.getString("checkout"));
                     row.add(rs.getString("workduration"));
-                    if(contactInclude){
+                    if (contactInclude) {
                         row.add(rs.getString("contact"));
                     }
-                    if(addressInclude){
+                    if (addressInclude) {
                         row.add(rs.getString("address"));
                     }
-                    if(stateInclude){
+                    if (stateInclude) {
                         row.add(rs.getString("state"));
                     }
-                    if(countryInclude){
+                    if (countryInclude) {
                         row.add(rs.getString("country"));
                     }
-                    if(uniqueRegIdInclude){
+                    if (uniqueRegIdInclude) {
                         row.add(rs.getString("uniqueregid"));
                     }
-                    
-                    if(rs.getString("checkout") == null){
+
+                    if (rs.getString("checkout") == null) {
                         absentCount++;
                     } else {
                         presentCount++;
                     }
-                    
+
                     model.addRow(row.toArray());
-                    
-                    if(emailList.size() == null){
+
+                    if (emailList.size() == 1) {
                         lblAbsent.setVisible(true);
                         lblPresent.setVisible(true);
                         presentLBL.setVisible(true);
                         absentLBL.setVisible(true);
                         lblPresent.setText(presentCount.toString());
-                        if(daysBetween != null && daysBetween > 0){
+                        if (daysBetween != null && daysBetween > 0) {
                             absentCount = daysBetween - presentCount;
                         }
-                        
+
                         lblAbsent.setText(absentCount.toString());
                     } else {
                         lblAbsent.setVisible(false);
@@ -461,18 +474,17 @@ public class ViewAttendance extends javax.swing.JFrame {
                         presentLBL.setVisible(false);
                         absentLBL.setVisible(false);
                     }
-                    
-                    
-                    
+
                 }
-            } catch (Exception ex){
+            } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
-        
+
         }
 
+    }
+
     private Long countWeekdays(LocalDate start, LocalDate end) {
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         long count = 0;
         LocalDate date = start;
         while(date.isBefore(end) || date.equals(end)){
