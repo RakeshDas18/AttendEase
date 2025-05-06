@@ -101,8 +101,18 @@ public class ViewAttendance extends javax.swing.JFrame {
         jScrollPane1.setViewportView(userTable);
 
         dateChooserFrom.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        dateChooserFrom.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dateChooserFromPropertyChange(evt);
+            }
+        });
 
         dateChooserTo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        dateChooserTo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dateChooserToPropertyChange(evt);
+            }
+        });
 
         txtSearch.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -331,6 +341,16 @@ public class ViewAttendance extends javax.swing.JFrame {
         // TODO add your handling code here:
         loadDataInTable();
     }//GEN-LAST:event_checkBoxUniqueRegIdItemStateChanged
+
+    private void dateChooserFromPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateChooserFromPropertyChange
+        // TODO add your handling code here:
+        loadDataInTable();
+    }//GEN-LAST:event_dateChooserFromPropertyChange
+
+    private void dateChooserToPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateChooserToPropertyChange
+        // TODO add your handling code here:
+        loadDataInTable();
+    }//GEN-LAST:event_dateChooserToPropertyChange
 
     /**
      * @param args the command line arguments
