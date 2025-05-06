@@ -270,17 +270,24 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="CONTACT"/>
       </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="checkBoxContactItemStateChanged"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="checkBoxAddress">
       <Properties>
         <Property name="text" type="java.lang.String" value="ADDRESS"/>
       </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="checkBoxAddressItemStateChanged"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="checkBoxState">
       <Properties>
         <Property name="text" type="java.lang.String" value="STATE"/>
       </Properties>
       <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="checkBoxStateItemStateChanged"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkBoxStateActionPerformed"/>
       </Events>
     </Component>
@@ -288,11 +295,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="COUNTRY"/>
       </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="checkBoxCountryItemStateChanged"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="checkBoxUniqueRegId">
       <Properties>
         <Property name="text" type="java.lang.String" value="UNIQUE REGISTRATION ID"/>
       </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="checkBoxUniqueRegIdItemStateChanged"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnResetFilter">
       <Properties>

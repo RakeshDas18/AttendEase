@@ -135,10 +135,25 @@ public class ViewAttendance extends javax.swing.JFrame {
         lblAbsent.setText("----------");
 
         checkBoxContact.setText("CONTACT");
+        checkBoxContact.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                checkBoxContactItemStateChanged(evt);
+            }
+        });
 
         checkBoxAddress.setText("ADDRESS");
+        checkBoxAddress.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                checkBoxAddressItemStateChanged(evt);
+            }
+        });
 
         checkBoxState.setText("STATE");
+        checkBoxState.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                checkBoxStateItemStateChanged(evt);
+            }
+        });
         checkBoxState.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 checkBoxStateActionPerformed(evt);
@@ -146,8 +161,18 @@ public class ViewAttendance extends javax.swing.JFrame {
         });
 
         checkBoxCountry.setText("COUNTRY");
+        checkBoxCountry.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                checkBoxCountryItemStateChanged(evt);
+            }
+        });
 
         checkBoxUniqueRegId.setText("UNIQUE REGISTRATION ID");
+        checkBoxUniqueRegId.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                checkBoxUniqueRegIdItemStateChanged(evt);
+            }
+        });
 
         btnResetFilter.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnResetFilter.setText("RESET FILTERS");
@@ -281,6 +306,31 @@ public class ViewAttendance extends javax.swing.JFrame {
         // TODO add your handling code here:
         loadDataInTable();
     }//GEN-LAST:event_formComponentShown
+
+    private void checkBoxContactItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxContactItemStateChanged
+        // TODO add your handling code here:
+        loadDataInTable();
+    }//GEN-LAST:event_checkBoxContactItemStateChanged
+
+    private void checkBoxAddressItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxAddressItemStateChanged
+        // TODO add your handling code here:
+        loadDataInTable();
+    }//GEN-LAST:event_checkBoxAddressItemStateChanged
+
+    private void checkBoxStateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxStateItemStateChanged
+        // TODO add your handling code here:
+        loadDataInTable();
+    }//GEN-LAST:event_checkBoxStateItemStateChanged
+
+    private void checkBoxCountryItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxCountryItemStateChanged
+        // TODO add your handling code here:
+        loadDataInTable();
+    }//GEN-LAST:event_checkBoxCountryItemStateChanged
+
+    private void checkBoxUniqueRegIdItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxUniqueRegIdItemStateChanged
+        // TODO add your handling code here:
+        loadDataInTable();
+    }//GEN-LAST:event_checkBoxUniqueRegIdItemStateChanged
 
     /**
      * @param args the command line arguments
