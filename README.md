@@ -64,6 +64,7 @@ String password = "your_password";
   - At end of work
 - The system logs attendance and calculates work duration
 
+---
 
 ### 🙋 Author
 
