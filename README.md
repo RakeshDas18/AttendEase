@@ -44,7 +44,7 @@ Go to File → Open Project and select the project folder
 
 ### 3. Set Up MySQL Database
 
-Configure your DB credentials in the Java connection file in config.properties file:
+Configure your DB credentials in the config.properties file:
 
 ```java
 String url = "jdbc:mysql://localhost:3306/attendance_db";
